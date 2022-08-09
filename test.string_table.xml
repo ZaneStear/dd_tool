@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<language id="schinese">
+		<entry id="hero_class_name_test"><![CDATA[测试文本]]></entry>
+		<entry id="action_null_text"><![CDATA[]]></entry>
+		<entry id="color_text"><![CDATA[{colour_start|stun}Stun{colour_end} Mod: 12,5/25/37,5/50%% vs rank 1/2/3/4]]></entry>
+	</language>
+	<language id="english">
+		
+	</language>
+</root>
+
