@@ -18,7 +18,7 @@ import dd_tool  # 引入工具模块
 xml_file = open('toy_trinket.string_table.xml', encoding='utf-8')
 # 获取到ChineseStringTable对象
 c = dd_tool.ChineseStringTable(xml_file)
-# 同伙parse函数，拿到多个Entry对象，调用Entry对象函数来进行翻译
+# 同过parse函数，拿到多个Entry对象，调用Entry对象函数来进行翻译
 for i in c.parse():  # type: dd_tool.Entry
     print(i.origin_text)  # 未翻译的文本
     print(i.translate_text)  # 自动翻译的文本
