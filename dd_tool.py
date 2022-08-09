@@ -31,6 +31,9 @@ import time
 import requests
 import xmltodict
 
+app_id = '你的APP ID'
+key = '你的密钥'
+
 
 def str2md5(string):
     """
@@ -51,10 +54,10 @@ def translate(q, l_from='en', l_to='zh'):
     :param l_to: 目标语种
     :return: 翻译结果，0为翻译失败
     """
+    global app_id
+    global key
     url = 'http://api.fanyi.baidu.com/api/trans/vip/translate'
-    app_id = '20220805001294713'
     salt = str(random.randint(1000000, 9999999))
-    key = '0HtDcsMID_7cj5wd0vBP'
     sign = str2md5(app_id + q + salt + key)
     url += '?q=' + q + '&from=' + l_from + '&to=' + l_to + '&appid=' + app_id + '&salt=' + salt + '&sign=' + sign
 
