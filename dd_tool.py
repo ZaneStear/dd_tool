@@ -100,37 +100,37 @@ class Entry:
     """
 
     def __init__(self, entry: dict, translate_text: str):
-        self._entry = entry
-        self._origin_text = entry['#text']
-        self._translate_text = translate_text
+        self.__entry = entry
+        self.__origin_text = entry['#text']
+        self.__translate_text = translate_text
 
     @property
     def translate_text(self):
-        return self._translate_text
+        return self.__translate_text
 
     @property
     def origin_text(self):
-        return self._origin_text
+        return self.__origin_text
 
     def translate_with_text(self, text: str):
         """
         用户输入翻译
         :param text: 翻译后的文本
         """
-        self._entry['#text'] = '<![CDATA[' + text + ']]>'
+        self.__entry['#text'] = '<![CDATA[' + text + ']]>'
 
     def translate_auto(self):
         """
         使用用百度自动翻译
         """
-        self._entry['#text'] = '<![CDATA[' + self.translate_text + ']]>'
+        self.__entry['#text'] = '<![CDATA[' + self.translate_text + ']]>'
 
     def no_translate(self):
         """
         不翻译，保留原有内容
         :return:
         """
-        self._entry['#text'] = '<![CDATA[' + self._origin_text + ']]>'
+        self.__entry['#text'] = '<![CDATA[' + self.__origin_text + ']]>'
 
 
 class ChineseStringTable:
@@ -146,11 +146,11 @@ class ChineseStringTable:
         else:
             raise Exception('传入的非file对象：', type(file))
 
-        self._list_origin_entry = []  # 未翻译的entry节点列表
-        self._list_result_entry = []  # 翻译后的Entry对象列表
-        self._parse_list_entry()
+        self.__list_origin_entry = []  # 未翻译的entry节点列表
+        self.__list_result_entry = []  # 翻译后的Entry对象列表
+        self.__parse_list_entry()
 
-    def _get_chinese_node(self):
+    def __get_chinese_node(self):
         """
         获取xml中的id=‘schinese’的language节点
         :return: dict:language
@@ -167,15 +167,15 @@ class ChineseStringTable:
                     raise Exception('没有id="schinese"的language标签')
         raise Exception('根标签必须为root标签')
 
-    def _parse_list_entry(self):
+    def __parse_list_entry(self):
         """
         把language里的每个entry放到_list_origin_entry
         """
-        d = self._get_chinese_node()
+        d = self.__get_chinese_node()
 
         for entry in d['entry']:
             if '#text' in entry:
-                self._list_origin_entry.append(entry)
+                self.__list_origin_entry.append(entry)
             else:
                 continue
 
@@ -184,19 +184,19 @@ class ChineseStringTable:
         核心函数，翻译与封装
         :return: list of Entry
         """
-        for i in self._list_origin_entry:
+        for i in self.__list_origin_entry:
             text = i['#text']  # entry内的文本
             text, re_str_list = replace_with_sign(text)  # 暂时清除与回填颜色代码
             text = translate(text)  # 百度翻译
 
             if text:  # text!=0,翻译成功
                 text = put_sign(text, re_str_list)  # 颜色代码回填
-                self._list_result_entry.append(Entry(i, text))  # 存储翻译过的Entry
+                self.__list_result_entry.append(Entry(i, text))  # 存储翻译过的Entry
             else:
                 print('翻译出错：' + i['#text'])
-                self._list_result_entry.append(Entry(i, '翻译出错'))
+                self.__list_result_entry.append(Entry(i, '翻译出错'))
             time.sleep(0.11)  # 百度接口一秒最多请求十次
-        return self._list_result_entry
+        return self.__list_result_entry
 
     def write_xml(self, path, pretty=True):
         """
