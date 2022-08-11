@@ -207,3 +207,12 @@ class ChineseStringTable:
         r = xmltodict.unparse(self._doc, pretty=pretty)
         with open(path, 'w', encoding='utf-8') as f:
             f.write(r.replace('&lt;', '<').replace('&gt;', '>'))
+
+    def get_xml(self, pretty=True):
+        """
+        获得xml字符串
+        :param pretty: 是否格式化，默认True
+        :return: 字符串
+        """
+        return xmltodict.unparse(self._doc, pretty=pretty)
+
