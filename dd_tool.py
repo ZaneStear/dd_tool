@@ -146,9 +146,13 @@ class ChineseStringTable:
         else:
             raise Exception('传入的非file对象：', type(file))
 
-        self.__list_origin_entry = []  # 未翻译的entry节点列表
-        self.__list_result_entry = []  # 翻译后的Entry对象列表
+        self.__list_origin_entry = []  # 未翻译的entry节点列表, __parse_list_entry获得
+        self.__list_result_entry = []  # 翻译后的Entry对象列表, parse获得
         self.__parse_list_entry()
+
+    @property
+    def list_result_entry(self):
+        return self.__list_result_entry
 
     def __get_chinese_node(self):
         """
